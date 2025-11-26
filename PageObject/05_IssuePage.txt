@@ -1,0 +1,65 @@
+
+#******************** Settings ************************
+
+*** Settings ***
+Documentation	Issue Test scenario. CRUD Operation: Create, Read, Update, Delete
+
+# TODO: Write Precondition and Postcondition, Tags 
+
+Pre Condition	Open browser, existing project 
+Post Condition	Close all browsers
+Tags		Issues
+
+#******************* Common Variables ********************
+
+
+*** Variables ***
+
+# NOTE: Please Remove your login credential before uploading Assignments
+
+# TODO: Write Issue creation field variables, Updated name of the issue
+
+IssuesUrl=	https://gitlab.com/UserName/Project/-/issues
+Title=		IssueName
+Description=	WhatIsTheMatter
+Second Title=	UpdatedName
+
+
+
+#******************** Test Cases *************************
+
+*** Test Case ***
+
+# TODO: Write Positive Test Cases and Test Process steps
+
+# Positive Test examples are below write test process steps for each below test case
+
+Create issue
+	Navigate to IssuesUrl
+	New item
+	Input Title			IssueName
+	Input Description		WhatIsTheMatter
+	Create issue
+	Verify Page Should Contain 	UserName/Project#nr created just now by User
+
+Update name of issue
+	Navigate to issue
+	Click Edit
+	Input Second Title		UpdatedName
+	Save changes
+	Verify Page Should Contain	User changed title from IssueName to UpdatedName just now
+
+
+Create second issue with previous updated name
+	Navigate to IssuesUrl
+	New item
+	Input Title			UpdatedName
+	Verify Page Should Contain	Similar items #nr
+					These existing items have a similar title and may represent
+					potential duplicates.
+
+Delete first issue
+	Navigate to issue
+	Click Edit
+	Close issue
+	Page Should Contain		Closed

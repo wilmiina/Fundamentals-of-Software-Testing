@@ -1,0 +1,99 @@
+
+#******************** Settings ************************
+
+*** Settings ***
+
+# TODO: Write Dcocumentation e.g. Project Test scenario. CRUD Operation: Create, Read, Update, Delete
+
+Documentation	Testing the project functionality. Creating, updating, deleting projects with valid and invalid commands.
+
+# TODO: Write Precondition, Postcondition, Tags
+
+Pre Condition		Open Browser, Log in
+Post Condition		Close All Browsers
+Tags	Create project, Update project, Delete project
+
+#******************* Common Variables ********************
+
+*** Variables ***
+
+# NOTE: Please Remove your login credential before uploading Assignments
+
+# TODO: Write Project creation field variables
+
+NewProjectUrl=		https://gitlab.com/projects/new
+BlankProjectUrl=	https://gitlab.com/projects/new#blank_project
+TemplateProjectUrl=	https://gitlab.com/projects/new#create_from_template
+Project_name=		ProjectName
+Project_URL=		ProjectURL
+
+
+
+
+#******************** Test Cases *************************
+
+*** Test Case ***
+
+# TODO: Write Positive and Negative Test Cases and Test Process steps
+
+# Positive Test examples are below write test process steps for each below test case
+
+Create blank project
+	Navigate to Blank Project page		BlankProjectUrl
+	Input Project name			ProjectName
+	Input Project URL			ProjectURL
+	Create project
+	Verify Page Should Contain		Project 'ProjectName' was successfully created.
+
+
+Create template project 
+	Navigate to Create from template page	TemplateProjectUrl
+	Input Project name			ProjectName
+	Input Project URL			ProjectURL
+	Create project
+	Verify Page Should Contain		The project was successfully imported.
+
+
+Update name of template project
+	Navigate to general settings
+	Input Project name			ProjectName
+	Save Changes
+	Verify Page Should Contain		Project 'ProjectName' was successfully updated.
+
+
+Delete template project
+	Navigate to general settings
+	Navigate to advanced
+	Delete project
+	Are you absolutely sure? Page Should Contain	You are about to delete this project 
+							containing:
+							x issues
+							x merge requests
+							x forks
+							x stars
+							This project is NOT a fork. This process 	
+							deletes the project repository and all 
+							related resources.
+							Enter the following to confirm:
+							UserName/ProjectName
+	Verify Page Should Contain			This project is pending deletion, and will be 	
+							deleted on 'yyyy-mm-dd'. Repository and other 
+							project resources are read-only.
+
+
+
+
+
+
+# Negative Test examples are below write test process steps for each below test case
+
+Create a blank project with the previous same name
+	Navigate to Blank Project page		BlankProjectUrl
+	Input Project Name			ProjectName
+	Input Project URL			ProjectURL
+	Create Project
+	Verify Page Should Contain		The form contains the following errors:
+						Project namespace name has already been taken
+						Name has already been taken
+						Path has already been taken
+
